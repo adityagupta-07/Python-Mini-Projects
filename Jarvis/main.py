@@ -27,7 +27,6 @@ def suppress_stderr():
 load_dotenv()
 r = sr.Recognizer()
 engine = pyttsx3.init()
-newsapi = "6d136bfb15f8484392d9c9b790e5db3d"
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 base_dir = os.getenv("base_dir")
 pygame.mixer.init()
@@ -253,19 +252,6 @@ def processCommand(c):
         song = c.lower().split(" ")[1]
         link = musicLibrary.music[song]
         webbrowser.open(link)
-    elif "news" in c.lower():
-        r = requests.get(f"https://newsapi.org/v2/top-headlines?country=us&apiKey={newsapi}")
-        if r.status_code == 200:
-            # Parese the json response    
-            data = r.json()
-
-            # Extract the articles
-            articles = data.get('articles', [])
-
-            # Print the headlines
-            for article in articles:
-                # speak(article['title'])
-                print(article['title'])
     else:
         # Let openai handle the request
         speak(aiProcess(c))
